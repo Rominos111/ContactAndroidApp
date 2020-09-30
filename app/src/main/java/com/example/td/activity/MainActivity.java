@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button_sms).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("smsto:" + contact.getPhonePortable()))
-                        .setType("vnd.android-dir/mms-sms");
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("smsto:" + contact.getPhonePortable()));
+                        // .setType("vnd.android-dir/mms-sms");
 
                 if (intent.resolveActivity(getPackageManager()) == null) {
                     // Toast.makeText(MainActivity.this, "OK", Toast.LENGTH_SHORT).show();
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.button_sms).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.button_mail).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + contact.getEmail()));
