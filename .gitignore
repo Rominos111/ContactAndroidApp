@@ -1,0 +1,7 @@
+.idea/
+.gradle
+app/build
+local.properties
+gradlew*
+gradle
+app/pro*

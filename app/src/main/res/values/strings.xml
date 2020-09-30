@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">TD</string>
+    <string name="contact_call">Appel</string>
+    <string name="contact_send_message">SMS</string>
+    <string name="contact_send_mail">Mail</string>
+
+    <string name="description_profil">Image de profil</string>
+    <string name="description_call">Appel</string>
+    <string name="description_phone_number">Numéro de téléphone</string>
+    <string name="description_mail">Adresse mail</string>
+    <string name="description_position">Position</string>
+
+    <string name="error_send_message">Erreur lors de l\'envoi du message</string>
+    <string name="contact_send_mail_detail">Envoi d\'un mail</string>
+
+    <string name="contact_name">%1$s %2$s</string>
+</resources>
