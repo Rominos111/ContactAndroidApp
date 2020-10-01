@@ -10,6 +10,12 @@
     <string name="description_mail">Adresse mail</string>
     <string name="description_position">Position</string>
 
+    <string name="description_contact_get_infos">Informations sur ce contact</string>
+    <string name="description_send_sms">Envoyer un SMS</string>
+    <string name="description_send_mail">Envoyer un mail</string>
+    <string name="description_choose_photo">Choisir une photo</string>
+    <string name="description_call_contact">Appeler ce contact</string>
+
     <string name="error_send_message">Erreur lors de l\'envoi du message</string>
     <string name="contact_send_mail_detail">Envoi d\'un mail</string>
 

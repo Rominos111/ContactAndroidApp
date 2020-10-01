@@ -1,6 +1,8 @@
 package com.example.td.model;
 
-public class Contact {
+import java.io.Serializable;
+
+public class Contact implements Serializable {
     private static int globalId = 0;
 
     private int id;
@@ -10,6 +12,11 @@ public class Contact {
     private String phoneHome;
     private String location;
     private String email;
+
+    public Contact(String firstName,
+                   String lastName) {
+        this(firstName, lastName, "phone", "home", "email", "address");
+    }
 
     public Contact(String firstName,
                    String lastName,

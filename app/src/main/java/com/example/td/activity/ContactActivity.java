@@ -2,8 +2,11 @@ package com.example.td.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,23 +19,15 @@ import android.widget.Toast;
 import com.example.td.R;
 import com.example.td.model.Contact;
 
-public class MainActivity extends AppCompatActivity {
+public class ContactActivity extends AppCompatActivity {
     private final int REQUEST_IMAGE_CAPTURE = 1;
-
-    private Contact contact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_contact);
 
-        contact = new Contact(
-                "a",
-                "b",
-                "06 01 02 03 04",
-                "04 01 02 03 04",
-                "test@example.com",
-                "Paris");
+        final Contact contact = (Contact) getIntent().getSerializableExtra(ListActivity.EXTRA_CONTACT);
 
         ((TextView) findViewById(R.id.contact_name)).setText(getString(R.string.contact_name, contact.getFirstName(), contact.getLastName()));
         ((TextView) findViewById(R.id.contact_phone_portable)).setText(contact.getPhonePortable());
@@ -44,7 +39,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contact.getPhonePortable()));
-                startActivity(intent);
+
+                if (ActivityCompat.checkSelfPermission(ContactActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(ContactActivity.this, "Permission manquante", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    startActivity(intent);
+                }
+            }
+        });
+
+        findViewById(R.id.button_call).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(getApplicationContext(), getString(R.string.description_call_contact), Toast.LENGTH_SHORT).show();
+                return false;
             }
         });
 
@@ -55,12 +64,19 @@ public class MainActivity extends AppCompatActivity {
                         // .setType("vnd.android-dir/mms-sms");
 
                 if (intent.resolveActivity(getPackageManager()) == null) {
-                    // Toast.makeText(MainActivity.this, "OK", Toast.LENGTH_SHORT).show();
                     Toast.makeText(getApplicationContext(), getString(R.string.error_send_message), Toast.LENGTH_SHORT).show();
                 }
                 else {
                     startActivity(intent);
                 }
+            }
+        });
+
+        findViewById(R.id.button_sms).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(getApplicationContext(), getString(R.string.description_send_sms), Toast.LENGTH_SHORT).show();
+                return false;
             }
         });
 
@@ -74,12 +90,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.button_mail).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(getApplicationContext(), getString(R.string.description_send_mail), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
         findViewById(R.id.contact_photo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 // v1 : Aperçu sans sauvegarde
                 startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+            }
+        });
+
+        findViewById(R.id.contact_photo).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(getApplicationContext(), getString(R.string.description_choose_photo), Toast.LENGTH_SHORT).show();
+                return false;
             }
         });
     }
@@ -89,7 +121,9 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            ((ImageView) findViewById(R.id.contact_photo)).setImageBitmap((Bitmap) data.getExtras().get("data"));
+            if (data != null && data.getExtras() != null) {
+                ((ImageView) findViewById(R.id.contact_photo)).setImageBitmap((Bitmap) data.getExtras().get("data"));
+            }
         }
     }
 }
