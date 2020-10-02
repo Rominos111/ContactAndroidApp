@@ -18,7 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
-    private List<Contact> contacts;
+    private static List<Contact> contacts = new ArrayList<>();
+
+    static {
+        contacts.add(new Contact("a", "A"));
+        contacts.add(new Contact("b", "B"));
+        contacts.add(new Contact("c", "C"));
+    }
+
     private RecyclerView list;
 
     public static final String EXTRA_CONTACT = "contact";
@@ -29,17 +36,11 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        contacts = new ArrayList<>();
-
         final Contact contact = (Contact) getIntent().getSerializableExtra(ListActivity.EXTRA_CREATE_CONTACT);
 
         if (contact != null) {
             contacts.add(contact);
         }
-
-        contacts.add(new Contact("a", "A"));
-        contacts.add(new Contact("b", "B"));
-        contacts.add(new Contact("c", "C"));
 
         list = findViewById(R.id.contact_list);
         list.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
