@@ -3,6 +3,7 @@ package com.example.td.activity;
 import com.example.td.R;
 import com.example.td.adapter.ContactAdapter;
 import com.example.td.model.Contact;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ public class ListActivity extends AppCompatActivity {
     private RecyclerView list;
 
     public static final String EXTRA_CONTACT = "contact";
+    public static final String EXTRA_CREATE_CONTACT = "create_contact";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,13 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
 
         contacts = new ArrayList<>();
+
+        final Contact contact = (Contact) getIntent().getSerializableExtra(ListActivity.EXTRA_CREATE_CONTACT);
+
+        if (contact != null) {
+            contacts.add(contact);
+        }
+
         contacts.add(new Contact("a", "A"));
         contacts.add(new Contact("b", "B"));
         contacts.add(new Contact("c", "C"));
@@ -45,8 +54,18 @@ public class ListActivity extends AppCompatActivity {
 
             @Override
             public boolean onItemLongClick(View v) {
-                Toast.makeText(getApplicationContext(), getString(R.string.description_contact_get_infos), Toast.LENGTH_SHORT).show();
+                contacts.remove(list.getChildViewHolder(v).getAdapterPosition());
+                Toast.makeText(getApplicationContext(), getString(R.string.description_contact_deleted), Toast.LENGTH_SHORT).show();
+                this.notifyDataSetChanged();
                 return false;
+            }
+        });
+
+        FloatingActionButton addContactButton = findViewById(R.id.button_add_contact);
+        addContactButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), CreateContactActivity.class));
             }
         });
     }
