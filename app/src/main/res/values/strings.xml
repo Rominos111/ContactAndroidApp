@@ -21,4 +21,8 @@
     <string name="contact_send_mail_detail">Envoi d\'un mail</string>
 
     <string name="contact_name">%1$s %2$s</string>
+
+    <string name="menu_none">Aucun</string>
+    <string name="menu_json">Fichier JSON</string>
+    <string name="menu_database">Database</string>
 </resources>

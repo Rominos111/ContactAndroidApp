@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:enabled="false"
+        android:title="Choix du stockage"
+        />
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/storage_none"
+            android:title="@string/menu_none" />
+
+        <item
+            android:id="@+id/storage_json"
+            android:title="@string/menu_json" />
+
+        <item
+            android:id="@+id/storage_database"
+            android:title="@string/menu_database" />
+    </group>
+</menu>

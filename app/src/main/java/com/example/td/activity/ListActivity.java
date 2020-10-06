@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
@@ -57,7 +58,7 @@ public class ListActivity extends AppCompatActivity {
             public boolean onItemLongClick(View v) {
                 contacts.remove(list.getChildViewHolder(v).getAdapterPosition());
                 Toast.makeText(getApplicationContext(), getString(R.string.description_contact_deleted), Toast.LENGTH_SHORT).show();
-                this.notifyDataSetChanged();
+                notifyDataSetChanged();
                 return false;
             }
         });
@@ -69,5 +70,11 @@ public class ListActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), CreateContactActivity.class));
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.settings, menu);
+        return true;
     }
 }

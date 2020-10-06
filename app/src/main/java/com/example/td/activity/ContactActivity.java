@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -122,7 +123,9 @@ public class ContactActivity extends AppCompatActivity {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             if (data != null && data.getExtras() != null) {
-                ((ImageView) findViewById(R.id.contact_photo)).setImageBitmap((Bitmap) data.getExtras().get("data"));
+                ImageView image = findViewById(R.id.contact_photo);
+                image.setImageBitmap((Bitmap) data.getExtras().get("data"));
+                image.setImageTintList(new ColorStateList(new int[0][0], new int[0]));
             }
         }
     }
