@@ -2,6 +2,7 @@ package com.example.td.adapter;
 
 import com.example.td.R;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.td.model.Contact;
-
-import java.util.List;
+import com.example.td.storage.ContactStorage;
 
 public abstract class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactHolder> {
     static class ContactHolder extends RecyclerView.ViewHolder {
@@ -35,10 +35,10 @@ public abstract class ContactAdapter extends RecyclerView.Adapter<ContactAdapter
         }
     }
 
-    private List<Contact> contacts;
+    private Context context;
 
-    public ContactAdapter(List<Contact> contacts) {
-        this.contacts = contacts;
+    public ContactAdapter(Context context) {
+        this.context = context;
     }
 
     @NonNull
@@ -66,12 +66,14 @@ public abstract class ContactAdapter extends RecyclerView.Adapter<ContactAdapter
 
     @Override
     public void onBindViewHolder(@NonNull ContactHolder holder, int position) {
-        holder.name.setText(contacts.get(position).getFirstName());
+        Contact contact = ContactStorage.get(context).findAll().get(position);
+        holder.itemView.setTag(contact.getId());
+        holder.name.setText(contact.getFirstName());
     }
 
     @Override
     public int getItemCount() {
-        return contacts.size();
+        return ContactStorage.get(context).size();
     }
 
     public abstract void onItemClick(View v);

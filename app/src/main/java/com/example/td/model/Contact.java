@@ -5,6 +5,10 @@ import java.io.Serializable;
 public class Contact implements Serializable {
     private static int globalId = 0;
 
+    public static int getNextID() {
+        return globalId;
+    }
+
     private int id;
     private String firstName;
     private String lastName;
@@ -15,15 +19,17 @@ public class Contact implements Serializable {
 
     public Contact(String firstName,
                    String lastName) {
-        this(firstName, lastName, "phone", "home", "email", "address");
+        this(0, firstName, lastName, "phone", "home", "email", "address");
     }
 
-    public Contact(String firstName,
+    public Contact(int id,
+                   String firstName,
                    String lastName,
                    String phonePortable,
                    String phoneHome,
                    String email,
                    String location) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phonePortable = phonePortable;
@@ -31,6 +37,10 @@ public class Contact implements Serializable {
         this.email = email;
         this.location = location;
         this.id = globalId++;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getFirstName() {

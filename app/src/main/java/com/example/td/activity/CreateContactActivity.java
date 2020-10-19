@@ -24,6 +24,7 @@ public class CreateContactActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Contact contact = new Contact(
+                        Contact.getNextID(),
                         ((TextView) findViewById(R.id.create_contact_first_name)).getText().toString(),
                         ((TextView) findViewById(R.id.create_contact_last_name)).getText().toString(),
                         ((TextView) findViewById(R.id.create_contact_phone_mobile)).getText().toString(),

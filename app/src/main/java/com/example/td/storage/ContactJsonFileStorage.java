@@ -10,6 +10,7 @@ import com.example.td.storage.utility.JSONFileStorage;
 
 public class ContactJsonFileStorage extends JSONFileStorage<Contact> {
     private static final String NAME = "contact";
+
     private static final String CONTACT_ID = "id";
     private static final String CONTACT_FIRST_NAME = "first_name";
     private static final String CONTACT_LAST_NAME = "last_name";
@@ -18,8 +19,18 @@ public class ContactJsonFileStorage extends JSONFileStorage<Contact> {
     private static final String CONTACT_EMAIL = "email";
     private static final String CONTACT_LOCATION = "location";
 
-    public ContactJsonFileStorage(Context context, String name) {
-        super(context, name);
+    private static ContactJsonFileStorage storage;
+
+    public static ContactJsonFileStorage get(Context context) {
+        if (storage == null) {
+            storage = new ContactJsonFileStorage(context);
+        }
+
+        return storage;
+    }
+
+    private ContactJsonFileStorage(Context context) {
+        super(context, NAME);
     }
 
     @Override
@@ -46,12 +57,15 @@ public class ContactJsonFileStorage extends JSONFileStorage<Contact> {
     @Override
     protected Contact jsonObjectToObject(JSONObject jsonObject) {
         try {
-            return new Contact(jsonObject.getString(CONTACT_FIRST_NAME),
+            return new Contact(
+                    jsonObject.getInt(CONTACT_ID),
+                    jsonObject.getString(CONTACT_FIRST_NAME),
                     jsonObject.getString(CONTACT_LAST_NAME),
                     jsonObject.getString(CONTACT_PHONE_PORTABLE),
                     jsonObject.getString(CONTACT_PHONE_HOME),
                     jsonObject.getString(CONTACT_EMAIL),
-                    jsonObject.getString(CONTACT_LOCATION));
+                    jsonObject.getString(CONTACT_LOCATION)
+            );
         }
         catch (JSONException e) {
             e.printStackTrace();
